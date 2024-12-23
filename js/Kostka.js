@@ -1,5 +1,5 @@
 function isNumber(liczba){
-     if (typeof liczba!== 'number') return false;
+     if (typeof liczba!== 'number'|| isNaN(liczba)) return false;
      return true;
 }
 
@@ -26,7 +26,7 @@ class Kostka {
     }
 
     toString() {
-      return `Kostka d${this.iloscScian}${this.modyfikator > 0 ? '+' + this.modyfikator : this.modyfikator < 0 ? this.modyfikator : ''}`;
+      return `Kostka d${this.#iloscScian}${this.#modyfikator > 0 ? '+' + this.#modyfikator : this.#modyfikator < 0 ? this.#modyfikator : ''}`;
     }
 }
 
@@ -35,8 +35,7 @@ function stworzKostke(iloscScian, modyfikator) {
         return null;
     }
     if(!isNumber(modyfikator))  modyfikator=0;
-    return new Kostka(iloscScian, modyfikator);
+        return new Kostka(iloscScian, modyfikator);
 }
 
-module.exports = Kostka
-module.exports = stworzKostke;
+module.exports ={isNumber, Kostka,stworzKostke}
