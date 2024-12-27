@@ -17,11 +17,11 @@ class Kostka {
         else this.#modyfikator = 0;
     }
 
-    getIloscScian(){
+    get IloscScian(){
         return this.#iloscScian;
     }
 
-    getModyfikator(){
+    get Modyfikator(){
         return this.#modyfikator;
     }
 
