@@ -71,6 +71,23 @@ class RzutKoscmi {
     }
 }
 
+function stworzRzut(tablicaKości, czyFigura=false, modyfikator=0, trudnosc=4, opis="Rzut kośćmi") {
+    if (!Array.isArray(tablicaKości) || tablicaKości.length === 0) {
+        return null;
+    }
+    if (typeof modyfikator !== 'number') {
+        return null;
+    }
+    if (typeof opis !== 'string') {
+        return null;
+    }
+    if(typeof czyFigura !== 'boolean'){
+        return null;
+    }
+    if(typeof trudnosc !== 'number' || trudnosc <= 0){
+        return null;
+    }
+    return new RzutKoscmi(tablicaKości, czyFigura, modyfikator, trudnosc, opis);
+}
 
-
-module.exports = RzutKoscmi;
+module.exports = {RzutKoscmi, stworzRzut}; 
