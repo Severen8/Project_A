@@ -14,7 +14,8 @@ class WynikRzutu {
         if (!Array.isArray(wynikKosciFigury)) {
             throw new Error("Wynik musi być tablicą liczb.");
         }else{
-            this.wynikKosciFigury = wynikKosciFigury;
+            this.#wynikKosciFigury = wynikKosciFigury;
+            this.#czyJestFigura = true;
             this.#wynikCałościowyFigury = this.#wynikKosciFigury
                 .filter(wynik => {
                     if (typeof wynik !== 'number') {
@@ -28,7 +29,7 @@ class WynikRzutu {
         if (!Array.isArray(wynikKosciAtrybutu)) {
             throw new Error("Wynik kości musi być tablicą liczb.");
         }else{
-            this.wynikKosciAtrybutu = wynikKosciAtrybutu;
+            this.#wynikKosciAtrybutu = wynikKosciAtrybutu;
             this.#wynikCałosciowyAtrybutu = this.#wynikKosciAtrybutu
                 .filter(wynik => {
                     if (typeof wynik !== 'number') {
@@ -80,7 +81,10 @@ class WynikRzutu {
     }
 
     get wynikCałościowyFigury() {
-        return this.#wynikCałościowyFigury;
+        if(this.#czyJestFigura){
+            return this.#wynikCałościowyFigury;
+        }
+        return 0;
     }
 
     get trudnoscRzutu() {
@@ -134,3 +138,6 @@ class WynikRzutu {
         Ilość Przebić: ${this.iloscPrzebic()}`;
     }
 }
+
+
+module.exports = WynikRzutu;
