@@ -21,14 +21,14 @@ describe('Kostka', () => {
     describe('constructor', () => {
         it('should create a Kostka object with the given number of sides and a default modifier of 0', () => {
             var kostka = new Kostka(6);
-            expect(kostka.getIloscScian()).toBe(6);
-            expect(kostka.getModyfikator()).toBe(0);
+            expect(kostka.IloscScian).toBe(6);
+            expect(kostka.Modyfikator).toBe(0);
         });
 
         it('should create a Kostka object with the given number of sides and modifier', () => {
             const kostka = new Kostka(10, 2);
-            expect(kostka.getIloscScian()).toBe(10);
-            expect(kostka.getModyfikator()).toBe(2);
+            expect(kostka.IloscScian).toBe(10);
+            expect(kostka.Modyfikator).toBe(2);
         });
 
         it('should throw an error if the number of sides is not a positive number', () => {
@@ -39,11 +39,11 @@ describe('Kostka', () => {
         });
       it('should handle undefined modifier by setting it to 0', () => {
             const kostka = new Kostka(6, undefined);
-            expect(kostka.getModyfikator()).toBe(0);
+            expect(kostka.Modyfikator).toBe(0);
          });
         it('should handle not number modifier by setting it to 0', () => {
              const kostka = new Kostka(6, 'abc');
-             expect(kostka.getModyfikator()).toBe(0);
+             expect(kostka.Modyfikator).toBe(0);
         });
     });
 
@@ -70,20 +70,20 @@ describe('stworzKostke', () => {
     it('should return a Kostka object if the number of sides is valid', () => {
         const kostka = stworzKostke(6);
         expect(kostka).toBeInstanceOf(Kostka);
-        expect(kostka.getIloscScian()).toBe(6);
-        expect(kostka.getModyfikator()).toBe(0);
+        expect(kostka.IloscScian).toBe(6);
+        expect(kostka.Modyfikator).toBe(0);
 
         const kostka2 = stworzKostke(10, 2);
         expect(kostka2).toBeInstanceOf(Kostka);
-        expect(kostka2.getIloscScian()).toBe(10);
-        expect(kostka2.getModyfikator()).toBe(2);
+        expect(kostka2.IloscScian).toBe(10);
+        expect(kostka2.Modyfikator).toBe(2);
 
 
     });
       it('should set the modifier to 0 if it is not a number', () => {
         const kostka = stworzKostke(6, 'abc');
         expect(kostka).toBeInstanceOf(Kostka);
-        expect(kostka.getModyfikator()).toBe(0);
+        expect(kostka.Modyfikator).toBe(0);
       });
 
     it('should return null if the number of sides is invalid', () => {
