@@ -1,13 +1,14 @@
 class Przedmiot {
-    constructor(itemName, itemType, itemSlotID, itemAttributes) {
+    constructor(itemID, itemName, itemType, itemAttributes, itemDesc) {
+        this.itemID = itemID;
         this.itemName = itemName;
         this.itemType = itemType;
-        this.itemSlotID = itemSlotID;
         this.itemAttributes = itemAttributes;
+        this.itemDesc = itemDesc;
     }
 
-    static create({itemName, itemType, itemSlotID, itemAttributes}) {
-        if (!itemName || !itemType || !itemSlotID || !itemAttributes) {
+    static create({itemID, itemName, itemType, itemAttributes, itemDesc}) {
+        if (!itemID || !itemName || !itemType || !itemAttributes) {
             throw new Error("Błąd podczas tworzenia Przedmiotu -> nieodpowiednio wypełnione wszystkie parametry");
         }
 
@@ -15,23 +16,24 @@ class Przedmiot {
             throw new Error("Atrybuty muszą być tablicą");
         }
 
-        return new Przedmiot(itemName, itemType, itemSlotID, itemAttributes);
+        return new Przedmiot(itemID, itemName, itemType, itemAttributes, itemDesc);
     }
 
     getDescription() {
-        return `Przedmiot: ${this.itemName}, Typ: ${this.itemType}, Slot: ${this.itemSlotID}, Atrybuty: ${JSON.stringify(this.itemAttributes)}`;
+        return `ID: ${this.itemID}, Przedmiot: ${this.itemName}, Typ: ${this.itemType}, Atrybuty: ${JSON.stringify(this.itemAttributes)}, \nDesc: ${this.itemDesc}`;
     }
 }
 
 // Przykład użycia
-const item = Przedmiot.create({
+const item_id_1 = Przedmiot.create({
+    itemID: 1,
     itemName: "Zardzewiały Topór",
     itemType: "weapon",
-    itemSlotID: 1,
     itemAttributes: [
         { attr: "str", value: 2 },
         { attr: "vit", value: 1 }
-    ]
+    ],
+    itemDesc: "Topór ma zardzewiały metalowy obuch, z tego względu nie jest pierwszorzędną bronią. Trzon wykonany jest z nieznanego gatunku drewna."
 });
 
-console.log(item.getDescription());
+console.log(item_id_1.getDescription());
