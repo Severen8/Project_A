@@ -1,14 +1,17 @@
-const {stworzRzut, RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
+const { RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
 const WynikRzutu = require('./WynikRzut');
-const {isNumber, Kostka, stworzKostke} = require('./Kostka.js'); // Adjust the path if necessary
+const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
+
+
+
 
 describe('stworzRzut', () => {
     it('should create a RzutKoscmi object with valid parameters', () => {
-        const rzut = stworzRzut([new Kostka(6), new Kostka(6)], true, 2, 5, "Test rzutu");
+        const rzut = RzutKoscmi.stworzRzut([new Kostka(6), new Kostka(6)], true, 2, 5, "Test rzutu");
         expect(rzut).toBeInstanceOf(RzutKoscmi);
     });
     it('should default to proper values', () => {
-        const rzut = stworzRzut([new Kostka(6),new Kostka(6)]);
+        const rzut = RzutKoscmi.stworzRzut([new Kostka(6),new Kostka(6)]);
         expect(rzut).toBeInstanceOf(RzutKoscmi);
         expect(rzut.rzut().modyfikator).toBe(0);
         expect(rzut.rzut().trudnoscRzutu).toBe(4);
@@ -16,12 +19,12 @@ describe('stworzRzut', () => {
     });
 
     it('should return null for invalid parameters', () => {
-        expect(stworzRzut(123)).toBeNull();
-        expect(stworzRzut([new Kostka(6),new Kostka(6)], false, 'a')).toBeNull();
-        expect(stworzRzut([new Kostka(6),new Kostka(6)], false, 2, 'a')).toBeNull();
-        expect(stworzRzut([new Kostka(6),new Kostka(6)], false, 2, 2, 123)).toBeNull();
-        expect(stworzRzut([new Kostka(6),new Kostka(6)], 1, 2, 2, 'test')).toBeNull();
-        expect(stworzRzut([], false, 2, 2, 'test')).toBeNull();
+        expect(RzutKoscmi.stworzRzut(123)).toBeNull();
+        expect(RzutKoscmi.stworzRzut([new Kostka(6),new Kostka(6)], false, 'a')).toBeNull();
+        expect(RzutKoscmi.stworzRzut([new Kostka(6),new Kostka(6)], false, 2, 'a')).toBeNull();
+        expect(RzutKoscmi.stworzRzut([new Kostka(6),new Kostka(6)], false, 2, 2, 123)).toBeNull();
+        expect(RzutKoscmi.stworzRzut([new Kostka(6),new Kostka(6)], 1, 2, 2, 'test')).toBeNull();
+        expect(RzutKoscmi.stworzRzut([], false, 2, 2, 'test')).toBeNull();
     });
 });
 
