@@ -9,5 +9,6 @@ export class Bron extends Przedmiot {
         } else {
             console.log("Inny Przedmiot" + this.getDescription());
         }
+        
     }
 }
