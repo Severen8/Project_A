@@ -28,14 +28,18 @@ class Kostka {
     toString() {
       return `Kostka d${this.#iloscScian}${this.#modyfikator > 0 ? '+' + this.#modyfikator : this.#modyfikator < 0 ? this.#modyfikator : ''}`;
     }
-}
 
-function stworzKostke(iloscScian, modyfikator) {
-    if (!isNumber(iloscScian) || iloscScian <= 0) {
-        return null;
+    static stworzKostke(iloscScian, modyfikator) {
+        if (!isNumber(iloscScian) || iloscScian <= 0) {
+            return null;
+        }
+        if(!isNumber(modyfikator))  modyfikator=0;
+        try{
+            return new Kostka(iloscScian, modyfikator);
+        }catch(e){
+            return null;
+        }
     }
-    if(!isNumber(modyfikator))  modyfikator=0;
-        return new Kostka(iloscScian, modyfikator);
 }
 
-module.exports ={isNumber, Kostka,stworzKostke}
+module.exports ={isNumber, Kostka}

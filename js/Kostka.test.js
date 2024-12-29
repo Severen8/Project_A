@@ -1,4 +1,4 @@
-const {isNumber, Kostka, stworzKostke} = require('./Kostka.js'); // Adjust the path if necessary
+const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
 
 describe('isNumber', () => {
@@ -68,12 +68,12 @@ describe('Kostka', () => {
 
 describe('stworzKostke', () => {
     it('should return a Kostka object if the number of sides is valid', () => {
-        const kostka = stworzKostke(6);
+        const kostka = Kostka.stworzKostke(6);
         expect(kostka).toBeInstanceOf(Kostka);
         expect(kostka.IloscScian).toBe(6);
         expect(kostka.Modyfikator).toBe(0);
 
-        const kostka2 = stworzKostke(10, 2);
+        const kostka2 = Kostka.stworzKostke(10, 2);
         expect(kostka2).toBeInstanceOf(Kostka);
         expect(kostka2.IloscScian).toBe(10);
         expect(kostka2.Modyfikator).toBe(2);
@@ -81,14 +81,14 @@ describe('stworzKostke', () => {
 
     });
       it('should set the modifier to 0 if it is not a number', () => {
-        const kostka = stworzKostke(6, 'abc');
+        const kostka = Kostka.stworzKostke(6, 'abc');
         expect(kostka).toBeInstanceOf(Kostka);
         expect(kostka.Modyfikator).toBe(0);
       });
 
     it('should return null if the number of sides is invalid', () => {
-        expect(stworzKostke(0)).toBeNull();
-        expect(stworzKostke(-5)).toBeNull();
-        expect(stworzKostke('abc')).toBeNull();
+        expect(Kostka.stworzKostke(0)).toBeNull();
+        expect(Kostka.stworzKostke(-5)).toBeNull();
+        expect(Kostka.stworzKostke('abc')).toBeNull();
     });
 });
