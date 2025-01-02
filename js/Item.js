@@ -32,4 +32,6 @@
             return `ID: ${this.itemID}, Przedmiot: ${this.itemName}, Typ: ${this.itemType}, Atrybuty: ${JSON.stringify(this.itemAttributes)}, \nDesc: ${this.itemDesc}`;
         }
     }
+
+    return Przedmiot;
 });

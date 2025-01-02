@@ -9,11 +9,10 @@
 
 <body>
     <h3>Strona Testowa</h3>
+    <script src="./js/Item.js"></script>
+    <script src="./js/Weapon.js"></script>
 
-    <script type="module">
-        import { Przedmiot } from "./js/Item.js";
-        import { Bron } from "./js/Weapon.js";
-
+    <script>
         const item_id_1 = Przedmiot.create({
             itemID: 1,
             itemName: "Zardzewiały Topór",
@@ -51,7 +50,6 @@
         console.log(item_id_2.getDescription())
         console.log(item_id_3.getDescription())
     </script>
-
 
 </body>
 
