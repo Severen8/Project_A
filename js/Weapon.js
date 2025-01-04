@@ -1,7 +1,7 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
-        const Przedmiot = require('./Przedmiot');
+        const Przedmiot = require('./Item');
         module.exports = factory(Przedmiot);
     } else {
         //(Przegladarka)
@@ -13,9 +13,9 @@
             super(itemID, itemName, itemType, itemAttributes, itemDesc);
     
             if (this.itemType.toLowerCase() == "weapon") {
-                console.log("Broń" + this.getDescription())
+                console.log("Broń " + this.getDescription())
             } else {
-                console.log("Inny Przedmiot" + this.getDescription());
+                console.log("Inny Przedmiot " + this.getDescription());
             }
             
         }
