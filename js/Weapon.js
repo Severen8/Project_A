@@ -11,6 +11,7 @@
     class Bron extends Przedmiot {
         constructor(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower) {
             super(itemID, itemName, itemType, itemAttributes, itemDesc);
+            this.attackPower = attackPower;
             
             if (this.itemType.toLowerCase() == "weapon") {
                 console.log("Broń\n" + this.getDescription() + "\nAtk: " + attackPower)

@@ -1,8 +1,6 @@
 const { RzutKoscmi } = require('./Rzut');
 const Bron = require('./Weapon');
-const {isNumber, Kostka} = require('./Kostka.js');
-const WynikRzutu = require('./WynikRzut');
-
+const { Kostka } = require('./Kostka.js');
 
 class Attack {
     constructor(nazwaAtaku, bron, tablicaKosci, czyFigura = false, modyfikator = 0, trudnosc = 4) {
@@ -18,12 +16,13 @@ class Attack {
 
         this.nazwaAtaku = nazwaAtaku;
         this.bron = bron;
+        this.modyfikator = modyfikator + bron.attackPower;
         this.rzutKoscmi = RzutKoscmi.stworzRzut(
             tablicaKosci,
             czyFigura,
             modyfikator + bron.attackPower,
             trudnosc,
-            `\nAtak: ${nazwaAtaku} przy użyciu ${bron.itemName}`
+            console.log(`Atak: ${nazwaAtaku} przy użyciu ${bron.itemName}`)
         );
 
         if (!this.rzutKoscmi) {
@@ -33,8 +32,7 @@ class Attack {
 
     wykonajAtak() {
         const wynik = this.rzutKoscmi.rzut();
-        console.log(`Atak: ${this.nazwaAtaku} przy użyciu ${this.bron.itemName}`);
-        console.log(wynik.toString());
+        console.log("\n" + wynik.toString());
         return wynik;
     }
 }
@@ -56,7 +54,7 @@ const topor = Bron.create({
 });
 
 // Tworzenie ataku
-const atak = new Attack("Cios Toporem", topor, [new Kostka(6), new Kostka(8)], true, 2, 3);
+const atak = new Attack("Cios Toporem", topor, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
 
 // Wykonanie ataku
 atak.wykonajAtak();
