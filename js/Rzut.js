@@ -36,7 +36,7 @@ class RzutKoscmi {
         var wynikiRzutow = this.#tablicaKości.map(kostka => {
             if (typeof kostka.IloscScian !== 'number' || kostka.IloscScian <= 0 ) throw new Error("Tablica kości zawiera niepoprawne dane")
                 
-                return Math.floor(Math.random() * kostka) + 1;
+                return Math.floor(Math.random() * kostka.IloscScian) + 1;
         });
             var j=0;
             var opis ="ATR: ";
@@ -66,8 +66,10 @@ class RzutKoscmi {
                 opis+="+AS(d"+this.#kosciFigury+"):"+wynikFigury[i];
             }
             opis+="="+wynikFigury.reduce((a,b)=>a+b,0);
+            console.log(opis);
             return new WynikRzutu( wynikiRzutow, this.#modyfikator, this.#opis, wynikFigury,this.#trudnosc);
         }
+         console.log(opis);
          return new WynikRzutu( wynikiRzutow, this.#modyfikator, this.#opis, [0],this.#trudnosc);
     }
 
