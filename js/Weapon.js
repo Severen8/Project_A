@@ -5,7 +5,7 @@
         module.exports = factory(Przedmiot);
     } else {
         //(Przegladarka)
-        global.Weapon = factory(global.Przedmiot);
+        global.Bron = factory(global.Przedmiot);
     }
 })(this, function (Przedmiot) {
     class Bron extends Przedmiot {
@@ -17,7 +17,10 @@
             } else {
                 console.log("Inny Przedmiot\n" + this.getDescription());
             }
-            
+        }
+
+        static create({itemID, itemName, itemType, itemAttributes, itemDesc, attackPower = 0}) {
+            return new Bron(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower);
         }
     }
 
