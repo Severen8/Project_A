@@ -4,7 +4,7 @@ const Bron = require('./Weapon');
 
 describe('Bron', () => {
     it('powinna dziedziczyć właściwości z klasy Przedmiot', () => {
-        const bron = new Bron(1, 'Miecz', 'Weapon', ['ostry', 'stalowy'], 'Miecz bojowy');
+        const bron = new Bron(1, 'Miecz', 'Weapon', ['ostry', 'stalowy'], 'Miecz bojowy', 5);
 
         expect(bron.itemID).toBe(1);
         expect(bron.itemName).toBe('Miecz');
@@ -15,7 +15,7 @@ describe('Bron', () => {
 
     it('powinna wyświetlić poprawny komunikat, jeśli typ to "Weapon"', () => {
         const consoleSpy = jest.spyOn(console, 'log');
-        new Bron(2, 'Tarcza', 'Weapon', ['ciężka', 'drewniana'], 'Solidna tarcza');
+        new Bron(2, 'Tarcza', 'Weapon', ['ciężka', 'drewniana'], 'Solidna tarcza', 1);
         
         expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Broń'));
         consoleSpy.mockRestore();
