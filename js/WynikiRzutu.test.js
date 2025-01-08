@@ -1,4 +1,4 @@
-const WynikRzutu = require('./WynikRzut.js'); 
+const {WynikRzutu} = require('./WynikRzut.js'); 
 
 describe('WynikRzutu', () => {
   describe('constructor', () => {

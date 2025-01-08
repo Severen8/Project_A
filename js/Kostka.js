@@ -1,11 +1,21 @@
-function isNumber(liczba){
-     if (typeof liczba!== 'number'|| isNaN(liczba)) return false;
-     return true;
-}
 
 
-
-class Kostka {
+(function (global, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        //(Gitbash)
+        module.exports = factory();
+    } else {
+        //(Przegladarka)
+        global.isNumber = factory().isNumber;
+        global.Kostka = factory().Kostka;
+    }
+})(this, function () {
+    
+    function isNumber(liczba){
+        if (typeof liczba!== 'number'|| isNaN(liczba)) return false;
+        return true;
+   }
+    class Kostka {
     #iloscScian;
     #modyfikator;
     constructor(iloscScian, modyfikator=0) {
@@ -41,5 +51,7 @@ class Kostka {
         }
     }
 }
+return {isNumber,Kostka};
+});
 
-module.exports ={isNumber, Kostka}
+
