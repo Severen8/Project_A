@@ -1,4 +1,15 @@
-class WynikRzutu {
+
+(function (global, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        //(Gitbash)
+        module.exports = factory();
+    } else {
+        //(Przegladarka)
+        global.WynikRzutu = factory().WynikRzutu;
+    }
+})(this, function () {
+    
+    class WynikRzutu {
     
     #wynikKosciAtrybutu;
     #wynikCałosciowyAtrybutu;
@@ -139,5 +150,6 @@ class WynikRzutu {
     }
 }
 
+return {WynikRzutu};
 
-module.exports = WynikRzutu;
+});

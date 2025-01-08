@@ -1,8 +1,18 @@
 
-const {isNumber, Kostka, stworzKostke} = require('./Kostka.js'); // Adjust the path if necessary
-const WynikRzutu = require('./WynikRzut.js'); 
+(function (global, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        //(Gitbash)
+        const {WynikRzutu} = require('./WynikRzut.js'); 
+        const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
-class RzutKoscmi {
+        module.exports = factory(WynikRzutu,isNumber, Kostka);
+    } else {
+        //(Przegladarka)
+        global.RzutKoscmi = factory(global.WynikRzutu, global.isNumber, global.Kostka);
+    }
+})(this, function (WynikRzutu, isNumber, Kostka) {
+
+    class RzutKoscmi {
     #tablicaKości;
     #modyfikator;
     #opis;
@@ -30,6 +40,8 @@ class RzutKoscmi {
         this.#opis = opis;
         this.#czyFigura = czyFigura;
         this.#trudnosc = trudnosc;
+        console.log(typeof Kostka);
+        console.log(typeof WynikRzutu);
     }
 
     rzut() {
@@ -97,6 +109,7 @@ class RzutKoscmi {
      }
     }
 }
+return {RzutKoscmi};
+});
 
 
-module.exports = {RzutKoscmi}; 
