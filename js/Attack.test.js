@@ -1,7 +1,7 @@
 const Attack = require('./Attack');
 const Bron = require('./Weapon');
 const { Kostka } = require('./Kostka');
-const { RzutKoscmi } = require('./Rzut');
+const RzutKoscmi = require('./Rzut');
 
 describe('Attack', () => {
     let validWeapon;

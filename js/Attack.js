@@ -1,8 +1,8 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         // Node.js
-        const { RzutKoscmi } = require('./Rzut');
-        const Bron = require('./Weapon');
+        const RzutKoscmi = require('./Rzut.js');
+        const Bron = require('./Weapon.js');
         const { Kostka } = require('./Kostka.js');
         module.exports = factory(RzutKoscmi, Bron, Kostka);
     } else {
