@@ -56,7 +56,7 @@ CREATE TABLE `chatwpis` (
   `id` int(11) NOT NULL,
   `idKampani` int(11) NOT NULL,
   `czas` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `idUrzytkownika` int(11) NOT NULL,
+  `idUzytkownika` int(11) NOT NULL,
   `tresc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -151,7 +151,7 @@ ALTER TABLE `cechapostaci`
 --
 ALTER TABLE `chatwpis`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idUrzytkownika` (`idUrzytkownika`),
+  ADD KEY `idUzytkownika` (`idUzytkownika`),
   ADD KEY `idKampani` (`idKampani`);
 
 --
@@ -257,7 +257,7 @@ ALTER TABLE `cechapostaci`
 -- Constraints for table `chatwpis`
 --
 ALTER TABLE `chatwpis`
-  ADD CONSTRAINT `chatwpis_ibfk_1` FOREIGN KEY (`idUrzytkownika`) REFERENCES `uzytkownicy` (`id`),
+  ADD CONSTRAINT `chatwpis_ibfk_1` FOREIGN KEY (`idUzytkownika`) REFERENCES `uzytkownicy` (`id`),
   ADD CONSTRAINT `chatwpis_ibfk_2` FOREIGN KEY (`idKampani`) REFERENCES `kampania` (`id`);
 
 --
