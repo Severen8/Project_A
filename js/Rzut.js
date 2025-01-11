@@ -40,8 +40,6 @@
         this.#opis = opis;
         this.#czyFigura = czyFigura;
         this.#trudnosc = trudnosc;
-        console.log(typeof Kostka);
-        console.log(typeof WynikRzutu);
     }
 
     rzut() {
