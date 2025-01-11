@@ -154,29 +154,138 @@ class Database {
         }
     }
 
-    static async fetchItem(id) {
+    static async fetchCharactersByUser(idGracza) {
         try {
-            const itemData = await Database.getItem(id);
-            return new Item(itemData.id, itemData.typ, itemData.nazwa, itemData.opis, itemData.staty);
+            const charactersData = await Database.fetchData('api', { action: 'getCharactersByUser', idGracza });
+            return charactersData.map(character => new Character(
+                character.id, 
+                character.idGracza,
+                character.idKampanii,
+                character.nazwa,
+                character.staty,
+                character.opis
+            ));
         } catch (error) {
-            console.error('Failed to fetch item:', error);
+            console.error('Failed to fetch characters by user:', error);
             throw error;
         }
     }
+    
 
     static async fetchCharacter(id) {
         try {
-            const characterData = await Database.getCharacter(id);
+            const characterData = await Database.fetchData('api', { action: 'getCharacter', id });
             return new Character(
-                characterData.id, 
+                characterData.id,
                 characterData.idGracza,
-                characterData.idKampanii, 
-                characterData.nazwa, 
-                characterData.staty, 
+                characterData.idKampanii,
+                characterData.nazwa,
+                characterData.staty,
                 characterData.opis
             );
         } catch (error) {
             console.error('Failed to fetch character:', error);
+            throw error;
+        }
+    }
+    
+    
+    static async fetchUser(id) {
+        try {
+            const userData = await Database.fetchData('api', { action: 'getUser', id });
+            return new User(
+                userData.id,
+                userData.nazwa,
+                userData.typ,
+                userData.email,
+                userData.haslo
+            );
+        } catch (error) {
+            console.error('Failed to fetch user:', error);
+            throw error;
+        }
+    }
+    
+
+    static async fetchCharactersByCampaign(idKampanii) {
+        try {
+            const charactersData = await Database.fetchData('api', { action: 'getCharactersByCampaign', idKampanii });
+            return charactersData.map(character => new Character(
+                character.id,
+                character.idGracza,
+                character.idKampanii,
+                character.nazwa,
+                character.staty,
+                character.opis
+            ));
+        } catch (error) {
+            console.error('Failed to fetch characters by campaign:', error);
+            throw error;
+        }
+    }
+    
+
+    static async fetchCampaign(id) {
+        try {
+            const campaignData = await Database.fetchData('api', { action: 'getCampaign', id });
+            return new Campaign(
+                campaignData.id,
+                campaignData.idMG,
+                campaignData.nazwa,
+                campaignData.opis
+            );
+        } catch (error) {
+            console.error('Failed to fetch campaign:', error);
+            throw error;
+        }
+    }
+    
+
+    static async fetchChatMessages(idUzytkownika) {
+        try {
+            const chatMessagesData = await Database.fetchData('api', { action: 'getChatMessages', idUzytkownika });
+            return chatMessagesData.map(message => new ChatMessage(
+                message.id,
+                message.idKampani,
+                message.czas,
+                message.idUrzytkownika,
+                message.tresc
+            ));
+        } catch (error) {
+            console.error('Failed to fetch chat messages:', error);
+            throw error;
+        }
+    }
+    
+
+    static async fetchChatMessagesByCampaign(idKampanii) {
+        try {
+            const chatMessagesData = await Database.fetchData('api', { action: 'getChatMessagesByCampaign', idKampanii });
+            return chatMessagesData.map(message => new ChatMessage(
+                message.id,
+                message.idKampani,
+                message.czas,
+                message.idUrzytkownika,
+                message.tresc
+            ));
+        } catch (error) {
+            console.error('Failed to fetch chat messages by campaign:', error);
+            throw error;
+        }
+    }
+    
+    static async fetchItem(id) {
+        try {
+            const itemData = await Database.fetchData('api', { action: 'getItem', id });
+            return new Item(
+                itemData.id,
+                itemData.typ,
+                itemData.nazwa,
+                itemData.opis,
+                itemData.staty
+            );
+        } catch (error) {
+            console.error('Failed to fetch item:', error);
             throw error;
         }
     }
