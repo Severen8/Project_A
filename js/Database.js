@@ -154,5 +154,31 @@ class Database {
         }
     }
 
+    static async fetchItem(id) {
+        try {
+            const itemData = await Database.getItem(id);
+            return new Item(itemData.id, itemData.typ, itemData.nazwa, itemData.opis, itemData.staty);
+        } catch (error) {
+            console.error('Failed to fetch item:', error);
+            throw error;
+        }
+    }
+
+    static async fetchCharacter(id) {
+        try {
+            const characterData = await Database.getCharacter(id);
+            return new Character(
+                characterData.id, 
+                characterData.idGracza,
+                characterData.idKampanii, 
+                characterData.nazwa, 
+                characterData.staty, 
+                characterData.opis
+            );
+        } catch (error) {
+            console.error('Failed to fetch character:', error);
+            throw error;
+        }
+    }
     
 }
