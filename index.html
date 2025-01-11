@@ -11,6 +11,10 @@
     <h3>Strona Testowa</h3>
     <script src="./js/Item.js"></script>
     <script src="./js/Weapon.js"></script>
+    <script src="./js/WynikRzut.js"></script>
+    <script src="./js/Kostka.js"></script>
+    <script src="./js/Rzut.js"></script>
+    <script src="./js/Attack.js"></script>
 
     <script>
         const item_id_1 = Bron.create({
@@ -47,6 +51,17 @@
             ],
             itemDesc: "Prosta drewniana tarcza, lekka i wytrzymała."
         });
+        
+        //2 Ciosy
+        const item_id_1_Attack_1 = new Attack("Cios Zardzewiałym Toporem", item_id_1, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
+        item_id_1_Attack_1.wykonajAtak();
+        item_id_1_Attack_1.wykonajAtak();
+        
+        //1 Cios
+        console.log("\n\n\n\n\n");
+        const item_id_2_Attack_1 = new Attack("Cios Mieczem Rycerskim", item_id_2, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
+        item_id_2_Attack_1.wykonajAtak();
+
     </script>
 
 </body>

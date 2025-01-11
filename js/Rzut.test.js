@@ -1,5 +1,5 @@
-const {RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
-const {WynikRzutu} = require('./WynikRzut');
+const RzutKoscmi = require('./Rzut'); // Adjust the path if necessary
+const WynikRzutu = require('./WynikRzut');
 const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
 

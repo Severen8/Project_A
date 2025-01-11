@@ -2,7 +2,7 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
-        const {WynikRzutu} = require('./WynikRzut.js'); 
+        const WynikRzutu = require('./WynikRzut.js'); 
         const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
         module.exports = factory(WynikRzutu,isNumber, Kostka);
@@ -107,7 +107,7 @@
      }
     }
 }
-return {RzutKoscmi};
+return RzutKoscmi;
 });
 
 
