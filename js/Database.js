@@ -156,7 +156,7 @@ class Database {
 
     static async fetchCharactersByUser(idGracza) {
         try {
-            const charactersData = await Database.fetchData('api', { action: 'getCharactersByUser', idGracza });
+            const charactersData = await Database.fetchData('PolaczenieBaza', { action: 'getCharactersByUser', idGracza });
             return charactersData.map(character => new Character(
                 character.id, 
                 character.idGracza,
@@ -174,7 +174,7 @@ class Database {
 
     static async fetchCharacter(id) {
         try {
-            const characterData = await Database.fetchData('api', { action: 'getCharacter', id });
+            const characterData = await Database.fetchData('PolaczenieBaza', { action: 'getCharacter', id });
             return new Character(
                 characterData.id,
                 characterData.idGracza,
@@ -192,7 +192,7 @@ class Database {
     
     static async fetchUser(id) {
         try {
-            const userData = await Database.fetchData('api', { action: 'getUser', id });
+            const userData = await Database.fetchData('PolaczenieBaza', { action: 'getUser', id });
             return new User(
                 userData.id,
                 userData.nazwa,
@@ -209,7 +209,7 @@ class Database {
 
     static async fetchCharactersByCampaign(idKampanii) {
         try {
-            const charactersData = await Database.fetchData('api', { action: 'getCharactersByCampaign', idKampanii });
+            const charactersData = await Database.fetchData('PolaczenieBaza', { action: 'getCharactersByCampaign', idKampanii });
             return charactersData.map(character => new Character(
                 character.id,
                 character.idGracza,
@@ -227,7 +227,7 @@ class Database {
 
     static async fetchCampaign(id) {
         try {
-            const campaignData = await Database.fetchData('api', { action: 'getCampaign', id });
+            const campaignData = await Database.fetchData('PolaczenieBaza', { action: 'getCampaign', id });
             return new Campaign(
                 campaignData.id,
                 campaignData.idMG,
@@ -243,7 +243,7 @@ class Database {
 
     static async fetchChatMessages(idUzytkownika) {
         try {
-            const chatMessagesData = await Database.fetchData('api', { action: 'getChatMessages', idUzytkownika });
+            const chatMessagesData = await Database.fetchData('PolaczenieBaza', { action: 'getChatMessages', idUzytkownika });
             return chatMessagesData.map(message => new ChatMessage(
                 message.id,
                 message.idKampani,
@@ -260,7 +260,7 @@ class Database {
 
     static async fetchChatMessagesByCampaign(idKampanii) {
         try {
-            const chatMessagesData = await Database.fetchData('api', { action: 'getChatMessagesByCampaign', idKampanii });
+            const chatMessagesData = await Database.fetchData('PolaczenieBaza', { action: 'getChatMessagesByCampaign', idKampanii });
             return chatMessagesData.map(message => new ChatMessage(
                 message.id,
                 message.idKampani,
@@ -276,7 +276,7 @@ class Database {
     
     static async fetchItem(id) {
         try {
-            const itemData = await Database.fetchData('api', { action: 'getItem', id });
+            const itemData = await Database.fetchData('PolaczenieBaza', { action: 'getItem', id });
             return new Item(
                 itemData.id,
                 itemData.typ,
@@ -289,5 +289,32 @@ class Database {
             throw error;
         }
     }
+
+    static async fetchCechy() {
+        try {
+            const cechyData = await Database.fetchData('PolaczenieBaza', { action: 'getCechy' });
+            return cechyData.map(cecha => new Cechy(
+                cecha.id,
+                cecha.nazwa,
+                cecha.opis
+            ));
+        } catch (error) {
+            console.error('Failed to fetch cechy:', error);
+            throw error;
+        }
+    }
     
+    static async fetchCharacterTraits(idPostaci) {
+        try {
+            const traitsData = await Database.fetchData('PolaczenieBaza', { action: 'getCharacterTraits', idPostaci });
+            return traitsData.map(trait => new CharacterTrait(
+                trait.id,
+                trait.name,
+                trait.description
+            ));
+        } catch (error) {
+            console.error('Failed to fetch character traits for postać ID:', idPostaci, error);
+            throw error;
+        }
+    }
 }

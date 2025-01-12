@@ -196,6 +196,46 @@ try {
             }
             break;
 
+            case 'getCechy':
+                $stmt = $conn->prepare("SELECT id, nazwa, opis, modyfikator FROM cecha");
+                $stmt->execute();
+                $traits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+                if ($traits) {
+                    echo json_encode($traits);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(['error' => 'No traits found']);
+                }
+                break;
+
+            case 'getCharacterTraits':
+                $idPostaci = $params['idPostaci'] ?? null;
+        
+                if (!$idPostaci) {
+                    http_response_code(400);
+                    echo json_encode(['error' => 'Missing character ID']);
+                    exit;
+                }
+        
+                $stmt = $conn->prepare("
+                    SELECT c.id, c.nazwa, c.opis, c.modyfikator
+                    FROM cechapostaci cp
+                    INNER JOIN cecha c ON cp.idCechy = c.id
+                    WHERE cp.idPostaci = :idPostaci
+                ");
+                $stmt->bindParam(':idPostaci', $idPostaci, PDO::PARAM_INT);
+                $stmt->execute();
+                $traits = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+                if ($traits) {
+                    echo json_encode($traits);
+                } else {
+                    http_response_code(404);
+                    echo json_encode(['error' => 'No traits found for this character']);
+                }
+                break;
+
         default:
             http_response_code(400);
             echo json_encode(['error' => 'Invalid action']);
