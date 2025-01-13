@@ -5,7 +5,7 @@
         module.exports = factory();
     } else {
         //(Przegladarka)
-        global.WynikRzutu = factory().WynikRzutu;
+        global.WynikRzutu = factory();
     }
 })(this, function () {
     
@@ -150,6 +150,6 @@
     }
 }
 
-return {WynikRzutu};
+return WynikRzutu;
 
 });

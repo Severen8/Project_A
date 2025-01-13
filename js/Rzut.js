@@ -2,7 +2,7 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
-        const {WynikRzutu} = require('./WynikRzut.js'); 
+        const WynikRzutu = require('./WynikRzut.js'); 
         const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
         module.exports = factory(WynikRzutu,isNumber, Kostka);
@@ -40,8 +40,6 @@
         this.#opis = opis;
         this.#czyFigura = czyFigura;
         this.#trudnosc = trudnosc;
-        console.log(typeof Kostka);
-        console.log(typeof WynikRzutu);
     }
 
     rzut() {
@@ -109,7 +107,7 @@
      }
     }
 }
-return {RzutKoscmi};
+return RzutKoscmi;
 });
 
 
