@@ -16,6 +16,7 @@
     <script src="./js/Kostka.js"></script>
     <script src="./js/Rzut.js"></script>
     <script src="./js/Attack.js"></script>
+    <script src="./js/Postac.js"></script>
 
     <script>
         const item_id_1 = Bron.create({
@@ -68,6 +69,22 @@
         console.log("\n\n\n\n\n");
         const item_id_2_Attack_1 = new Attack("Cios Mieczem Rycerskim", item_id_2, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
         item_id_2_Attack_1.wykonajAtak();
+
+
+        let atr = new Map();
+        atr.set("sila", new Kostka(6));
+        atr.set("zwinnosc", new Kostka(6));
+        atr.set("wigor", new Kostka(6));
+        atr.set("spryt", new Kostka(6));
+        atr.set("duch", new Kostka(6));
+
+        let umiejetnosci = new Map();
+        umiejetnosci.set("walka", new Kostka(6));
+        umiejetnosci.set("strzelectwo", new Kostka(6));
+        umiejetnosci.set("skradanie", new Kostka(6));
+        let postac = new Postac("Rycerz","testowy",atr,umiejetnosci);
+
+        console.log(postac);
 
     </script>
 

@@ -3,7 +3,7 @@
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
         const {Przedmiot} = require('./Item.js');
-const {Cecha} = require('./Cecha.js');
+const {Cecha} = require('./Trait.js');
 const {RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
 const {WynikRzutu} = require('./WynikRzut');
 const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
@@ -15,6 +15,7 @@ const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessa
         global.Postac = factory( global.Przedmiot, global.Cecha, global.Kostka, global.WynikRzutu, global.RzutKoscmi);
     }
 })(this, function ( Przedmiot, Cecha, Kostka, WynikRzutu, RzutKoscmi) {
+
 class Postac{
     #imię
     #opis
@@ -27,7 +28,6 @@ class Postac{
     #EXP
     #dostepnyEXP
     #Fuksy 
-    #FuksyMax
     #FuksyAktualne
     #Rany
 #Charyzma
@@ -99,7 +99,7 @@ constructor(imię,opis,Atrybuty,Umiejętności,EQ = [], Figura=true, Cechy=[], E
     this.#szok = false;
 
 
-    this.Charyzma = this.#Cechy.filter(cecha=>cecha.itemAttributes.charyzma != undefined).map(cehca=>cecha.itemAttributes.charyzma).reduce((acc, val) => acc + val, 0);
+    this.#Charyzma = this.#Cechy.filter(cecha=>cecha.traitEffects.charyzma != undefined).map(cecha=>cecha.traitEffects.charyzma).reduce((acc, val) => acc + val, 0);
     
 }
 
@@ -129,10 +129,6 @@ uzyjFuksa(){
     }
     else{
         return false;}
-}
-
-get FuksyMax(){
-    return this.#FuksyMax;
 }
 
 get Szybkość(){
@@ -182,7 +178,7 @@ get EXP(){
 
 get FuksyMax(){
     
-    let fuksyZCech=this.#EQ.filter(cecha=>typeof cecha =="Cecha").filter(cecha=>cecha.itemAttributes.fuksy != undefined).map(cehca=>cecha.itemAttributes.fuksy).reduce((acc, val) => acc + val, 0);
+    let fuksyZCech=this.#EQ.filter(cecha=>typeof cecha =="Cecha").filter(cecha=>cecha.traitEffects.fuksy != undefined).map(cecha=>cecha.traitEffects.fuksy).reduce((acc, val) => acc + val, 0);
     let fuksyZPrzedmiotów=this.#EQ.filter(przedmiot=>typeof przedmiot =="Przedmiot").filter(przedmiot=>przedmiot.itemAttributes.fuksy != undefined).map(przedmiot=>przedmiot.itemAttributes.fuksy).reduce((acc, val) => acc + val, 0);
     return this.#Fuksy+fuksyZCech+fuksyZPrzedmiotów;
 }
@@ -194,7 +190,7 @@ get Obrona(){
     return this.#Umiejętności.get("walka").IloscScian/2+2;}
 
     get Wytrzymałość(){
-        return this.#Atrybuty.get("Wigor").IloscScian/2+2;}
+        return this.#Atrybuty.get("wigor").IloscScian/2+2;}
 
     get WytrzymałośćPancerz(){
         return this.Wytrzymałość+this.Pancerz;}
@@ -230,7 +226,7 @@ get Obrona(){
     #ObliczMod(key){
         let mod=0;
         if(this.#EQ.length>0){
-            this.#Cechy.filter(cecha=>typeof cecha =="Cecha").filter(cecha=>cecha.itemAttributes.mod != undefined).map(cehca=>cecha.itemAttributes.mod).forEach(mod=>mod+=mod);
+            this.#Cechy.filter(cecha=>typeof cecha =="Cecha").filter(cecha=>cecha.traitEffects.mod != undefined).map(cecha=>cecha.traitEffects.mod).forEach(mod=>mod+=mod);
             this.#EQ.filter(przedmiot=>typeof przedmiot =="Przedmiot").filter(przedmiot=>przedmiot.itemAttributes.mod != undefined).map(przedmiot=>przedmiot.itemAttributes.mod).forEach(mod=>mod+=mod);
         }
         return mod;
@@ -321,5 +317,10 @@ get Obrona(){
         }
     }
 
+    toString(){
+        return `Imię: ${this.#imię}, Opis: ${this.#opis}, Atrybuty: ${JSON.stringify(this.#Atrybuty)}, Umiejętności: ${JSON.stringify(this.#Umiejętności)}, EQ: ${JSON.stringify(this.#EQ)}, Figura: ${this.#Figura}, Cechy: ${JSON.stringify(this.#Cechy)}, EXP: ${this.#EXP}, Dostępny EXP: ${this.#dostepnyEXP}, Fuksy: ${this.#Fuksy}, Fuksy Aktualne: ${this.#FuksyAktualne}, Rany: ${this.#Rany}, Charyzma: ${this.Charyzma}, Szybkość: ${this.#Szybkość}, Złoto: ${this.#zloto}, Szok: ${this.#szok}`;
+    }
+
 }
+return Postac;
 });
