@@ -204,6 +204,14 @@ get Obrona(){
         else if(this.#EXP<80)return "Heros";
         else return "Legendarny";
     }
+
+    get EQ(){
+        return this.#EQ;
+    }
+
+    get Cechy(){
+        return this.#Cechy;
+    }
   Atrybut(key){
     if(this.#Atrybuty.has(key))
     return this.#Atrybuty.get(key);
