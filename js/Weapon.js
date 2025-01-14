@@ -9,8 +9,8 @@
     }
 })(this, function (Przedmiot) {
     class Bron extends Przedmiot {
-        constructor(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower) {
-            super(itemID, itemName, itemType, itemAttributes, itemDesc);
+        constructor(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower, traitName, traitEffects, traitDesc) {
+            super(itemID, itemName, itemType, itemAttributes, itemDesc, traitName, traitEffects, traitDesc);
             this.attackPower = attackPower;
             
             if (this.itemType.toLowerCase() == "weapon") {
@@ -20,8 +20,8 @@
             }
         }
 
-        static create({itemID, itemName, itemType, itemAttributes, itemDesc, attackPower = 0}) {
-            return new Bron(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower);
+        static create({itemID, itemName, itemType, itemAttributes, itemDesc, attackPower = 0, traitName, traitEffects, traitDesc}) {
+            return new Bron(itemID, itemName, itemType, itemAttributes, itemDesc, attackPower, traitName, traitEffects, traitDesc);
         }
     }
 
