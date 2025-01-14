@@ -36,7 +36,7 @@
     }
 
     toString() {
-      return `Kostka d${this.#iloscScian}${this.#modyfikator > 0 ? '+' + this.#modyfikator : this.#modyfikator < 0 ? this.#modyfikator : ''}`;
+      return `d${this.#iloscScian}${this.#modyfikator > 0 ? '+' + this.#modyfikator : this.#modyfikator < 0 ? this.#modyfikator : ''}`;
     }
 
     static stworzKostke(iloscScian, modyfikator) {
