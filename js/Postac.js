@@ -2,10 +2,10 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
-        const {Przedmiot} = require('./Item.js');
-const {Cecha} = require('./Trait.js');
-const {RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
-const {WynikRzutu} = require('./WynikRzut');
+        const Przedmiot = require('./Item.js');
+const Cecha= require('./Trait.js');
+const RzutKoscmi = require('./Rzut.js'); // Adjust the path if necessary
+const WynikRzutu = require('./WynikRzut.js');
 const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
 
@@ -109,6 +109,7 @@ const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessa
         get eq() { return this.#eq; }
         get cechy() { return this.#cechy; }
         get rany() { return this.#rany; }
+        get szok() { return this.#szok; }
     
         set fuksy(value) {
             this.#fuksyAktualne = this.#validateNumber(value, "Fuksy");
@@ -153,7 +154,7 @@ const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessa
         }
     
          get fuksyMax() {
-        let fuksyZCech = this.#eq
+        let fuksyZCech = this.#cechy
             .filter(item => item instanceof Cecha)
             .filter(item => item.traitEffects?.fuksy !== undefined)
             .map(item => item.traitEffects.fuksy)
@@ -169,7 +170,7 @@ const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessa
         }
     
         get obrona() {
-              const walka = this.#umiejetnosci.get("walka");
+              const walka = this.#umiejetnosci.get("Walka");
             return walka ? Math.floor(walka.IloscScian / 2) + 2 : 2;
         }
     
@@ -238,13 +239,14 @@ const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessa
         dodajPrzedmiot(przedmiot) {
             if (przedmiot instanceof Przedmiot) {
                 this.#eq.push(przedmiot);
+                console.log(przedmiot);
                 this.#aktualizacjaModyfikatorow();
             }
         }
     
         dodajCeche(cecha) {
             if (cecha instanceof Cecha) {
-                 this.#eq.push(cecha);
+                 this.#cechy.push(cecha);
                  this.#aktualizacjaModyfikatorow();
             }
         }

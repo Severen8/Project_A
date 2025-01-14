@@ -29,6 +29,14 @@
             opis.textContent = character.Opis;
             kontener.appendChild(opis);
 
+            let obrona = document.createElement('p');
+            obrona.textContent = `Obrona: ${character.obrona}`;
+            kontener.appendChild(obrona);
+
+            let wytrzymalosc = document.createElement('p');
+            wytrzymalosc.textContent = `Wytrzymałość: ${character.wytrzymalosc}`;
+            kontener.appendChild(wytrzymalosc);
+            
             let atrybuty = document.createElement('div');
             atrybuty.textContent = "Atrybuty:";
             for(let key of character.atrybutyKeys()){
