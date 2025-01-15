@@ -5,7 +5,7 @@
         module.exports = factory();
     } else {
         //(Przegladarka)
-        global.WynikRzutu = factory().WynikRzutu;
+        global.WynikRzutu = factory();
     }
 })(this, function () {
     
@@ -21,7 +21,7 @@
     #czyJestFigura;
 
 
-    constructor( wynikKosciAtrybutu, modyfikator, opis, wynikKosciFigury=0,trudnoscRzutu = 4) {
+    constructor( wynikKosciAtrybutu, modyfikator, opis, wynikKosciFigury=[0],trudnoscRzutu = 4) {
         if (!Array.isArray(wynikKosciFigury)) {
             throw new Error("Wynik musi być tablicą liczb.");
         }else{
@@ -150,6 +150,6 @@
     }
 }
 
-return {WynikRzutu};
+return WynikRzutu;
 
 });

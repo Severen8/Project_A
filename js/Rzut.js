@@ -2,7 +2,7 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         //(Gitbash)
-        const {WynikRzutu} = require('./WynikRzut.js'); 
+        const WynikRzutu = require('./WynikRzut.js'); 
         const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
         module.exports = factory(WynikRzutu,isNumber, Kostka);
@@ -56,12 +56,17 @@
             }
             return value;
         }
+      
+      
+
         #validateTrudnosc(value, name) {
               if(typeof value !== 'number' || value <= 0){
                  throw new Error(`${name} rzutu musi być liczbą dodatnią`);
             }
             return value;
         }
+      
+      
         rzut() {
           const wynikiRzutow = this.#tablicaKości.map(kostka => {
               if (typeof kostka.IloscScian !== 'number' || kostka.IloscScian <= 0) {
@@ -125,7 +130,9 @@
             }
         }
     }
+
 return {RzutKoscmi};
+
 });
 
 

@@ -4,13 +4,16 @@ const Przedmiot = require('./Item');
 describe('Przedmiot', () => {
     describe('Konstruktor', () => {
         it('powinien poprawnie przypisać wartości do pól', () => {
-            const przedmiot = new Przedmiot(1, 'Miecz', 'Bron', ['ostry', 'stalowy'], 'Miecz bojowy');
+            const przedmiot = new Przedmiot(1, 'Miecz', 'Bron', ['ostry', 'stalowy'], 'Miecz bojowy','Wytrzymałość', ['+5 HP'],'Zwiększa poziom życia');
 
             expect(przedmiot.itemID).toBe(1);
             expect(przedmiot.itemName).toBe('Miecz');
             expect(przedmiot.itemType).toBe('Bron');
             expect(przedmiot.itemAttributes).toEqual(['ostry', 'stalowy']);
             expect(przedmiot.itemDesc).toBe('Miecz bojowy');
+            expect(przedmiot.traitName).toBe('Wytrzymałość');
+            expect(przedmiot.traitEffects).toEqual(['+5 HP']);
+            expect(przedmiot.traitDesc).toBe('Zwiększa poziom życia');
         });
     });
 
@@ -63,12 +66,12 @@ describe('Przedmiot', () => {
 
     describe('Metoda getDescription', () => {
         it('powinna zwrócić poprawny opis przedmiotu', () => {
-            const przedmiot = new Przedmiot(5, 'Hełm', 'Zbroja', ['metalowy', 'wytrzymały'], 'Hełm rycerski');
+            const przedmiot = new Przedmiot(5, 'Hełm', 'Zbroja', ['metalowy', 'wytrzymały'], 'Hełm rycerski','Wytrzymałość', ['+15 HP'],'Zwiększa poziom życia');
 
             const description = przedmiot.getDescription();
 
             expect(description).toBe(
-                'ID: 5, Przedmiot: Hełm, Typ: Zbroja, Atrybuty: ["metalowy","wytrzymały"], \nDesc: Hełm rycerski'
+                'ID: 5, Przedmiot: Hełm, Typ: Zbroja, Atrybuty: ["metalowy","wytrzymały"], \nDesc: Hełm rycerski,\nCecha: Nazwa Cechy: Wytrzymałość, Efekty: ["+15 HP"], Opis: Zwiększa poziom życia'
             );
         });
     });

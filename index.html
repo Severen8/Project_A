@@ -9,8 +9,15 @@
 
 <body>
     <h3>Strona Testowa</h3>
+    <script src="./js/Trait.js"></script>
     <script src="./js/Item.js"></script>
     <script src="./js/Weapon.js"></script>
+    <script src="./js/WynikRzut.js"></script>
+    <script src="./js/Kostka.js"></script>
+    <script src="./js/Rzut.js"></script>
+    <script src="./js/Attack.js"></script>
+    <script src="./js/Postac.js"></script>
+    <script src="./js/Show.js"></script>
 
     <script>
         const item_id_1 = Bron.create({
@@ -21,8 +28,11 @@
                 { attr: "str", value: 2 },
                 { attr: "vit", value: 1 }
             ],
-            itemDesc: "Topór ma zardzewiały metalowy obuch, z tego względu nie jest pierwszorzędną bronią. Trzon wykonany jest z nieznanego gatunku drewna.",
-            attackPower: 2
+            itemDesc: "Topór ma zardzewiały metalowy obuch, z tego względu nie jest pierwszorzędną bronią. Trzon wykonany jest z nieznanego gatunku drewna",
+            attackPower: 2,
+            traitName: 'Brutalność',
+            traitEffects: '+3 STR',
+            traitDesc: 'Brak opisu'
         });
 
         const item_id_2 = Bron.create({
@@ -33,8 +43,11 @@
                 { attr: "str", value: 5 },
                 { attr: "dex", value: 3 }
             ],
-            itemDesc: "Dobrze wykonany miecz wykorzystywany przez rycerzy w bitwach.",
-            attackPower: 5
+            itemDesc: "Dobrze wykonany miecz wykorzystywany przez rycerzy w bitwach",
+            attackPower: 5,
+            traitName: 'Powierność',
+            traitEffects: '+3 VIT',
+            traitDesc: 'Brak opisu'
         });
 
         const item_id_3 = Bron.create({
@@ -45,8 +58,51 @@
                 { attr: "def", value: 4 },
                 { attr: "vit", value: 2 }
             ],
-            itemDesc: "Prosta drewniana tarcza, lekka i wytrzymała."
+            itemDesc: "Prosta drewniana tarcza, lekka i wytrzymała"
         });
+        
+        //2 Ciosy
+        const item_id_1_Attack_1 = new Attack("Cios Zardzewiałym Toporem", item_id_1, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
+        item_id_1_Attack_1.wykonajAtak();
+        item_id_1_Attack_1.wykonajAtak();
+        
+        //1 Cios
+        console.log("\n\n\n\n\n");
+        const item_id_2_Attack_1 = new Attack("Cios Mieczem Rycerskim", item_id_2, [Kostka.stworzKostke(6), Kostka.stworzKostke(8)], true, 2, 3);
+        item_id_2_Attack_1.wykonajAtak();
+
+
+        let atr = new Map();
+        atr.set("sila", new Kostka(6));
+        atr.set("zwinnosc", new Kostka(6));
+        atr.set("wigor", new Kostka(6));
+        atr.set("spryt", new Kostka(6));
+        atr.set("duch", new Kostka(6));
+
+        let umiejetnosci = new Map();
+        umiejetnosci.set("walka", new Kostka(6));
+        umiejetnosci.set("strzelectwo", new Kostka(6));
+        umiejetnosci.set("skradanie", new Kostka(6));
+        let postac = new Postac("Rycerz","testowy",atr,umiejetnosci);
+
+        const cecha = new Cecha("Fuks", {"fuksy":2}, "Brak opisu");
+             postac.dodajCeche(cecha);
+             const przedmiot= Bron.create({
+            itemID: 3,
+            itemName: "Tarcza Drewniana",
+            itemType: "shield",
+            itemAttributes: [
+                { attr: "sila", value: 4 },
+                { attr: "vit", value: 2 }
+            ],
+            itemDesc: "Prosta drewniana tarcza, lekka i wytrzymała"
+        });
+             postac.dodajPrzedmiot(przedmiot);
+        console.log(postac);
+
+        Show.showPostac(postac);
+        console.log(postac.atrybut("sila").Modyfikator);
+
     </script>
 
 </body>

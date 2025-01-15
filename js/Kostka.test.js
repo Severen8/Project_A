@@ -50,17 +50,17 @@ describe('Kostka', () => {
     describe('toString', () => {
         it('should return a string in the correct format for no modifier', () => {
             const kostka = new Kostka(6);
-            expect(kostka.toString()).toBe('Kostka d6');
+            expect(kostka.toString()).toBe('d6');
         });
 
         it('should return a string in the correct format for a positive modifier', () => {
             const kostka = new Kostka(10, 2);
-            expect(kostka.toString()).toBe('Kostka d10+2');
+            expect(kostka.toString()).toBe('d10+2');
         });
 
         it('should return a string in the correct format for a negative modifier', () => {
             const kostka = new Kostka(20, -3);
-            expect(kostka.toString()).toBe('Kostka d20-3');
+            expect(kostka.toString()).toBe('d20-3');
         });
     });
 });

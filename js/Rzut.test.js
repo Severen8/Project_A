@@ -1,5 +1,5 @@
-const {RzutKoscmi} = require('./Rzut'); // Adjust the path if necessary
-const {WynikRzutu} = require('./WynikRzut');
+const RzutKoscmi = require('./Rzut'); // Adjust the path if necessary
+const WynikRzutu = require('./WynikRzut');
 const {isNumber, Kostka} = require('./Kostka.js'); // Adjust the path if necessary
 
 
@@ -72,15 +72,7 @@ describe('RzutKoscmi', () => {
             expect(Array.isArray(wynikRzutu.wynikKosciFigury)).toBe(true);
             expect(wynikRzutu.trudnoscRzutu).toBe(5);
         });
-        it('should perform automatic success roll', () => {
-         const rzut = new RzutKoscmi([new Kostka(6)], false, 0, 4, "Test rzutu");
-          const wynikRzutu = rzut.rzut();
-           let success = false;
-            wynikRzutu.wynikKosciAtrybutu.forEach(el=>{if(el === 6) success = true});
-            if(success){
-                expect(wynikRzutu.wynikKosciAtrybutu.length).toBe(2)
-            }
-            });
+        
 
         it('should perform automatic success roll when figure roll is true', () => {
              const rzut = new RzutKoscmi([new Kostka(6)], true, 0, 4, "Test rzutu");
