@@ -1,7 +1,7 @@
 (function (global, factory) {
     if (typeof module !== "undefined" && module.exports) {
         // Node.js
-        const Postacc = require('./Postac.js');
+        const Postac = require('./Postac.js');
         const Kostka = require('./Kostka.js');
         const WynikRzutu = require('./WynikRzut.js');
         const Show = require('./Show.js');

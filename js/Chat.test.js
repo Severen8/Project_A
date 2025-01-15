@@ -1,43 +1,81 @@
-const { obsluzKomende } = require('./Chat');
-const Kostka = require('./Kostka');
-const WynikRzutu = require('./WynikRzut');
+/**
+ * @jest-environment jsdom
+ */
 
-jest.mock('./Kostka', () => {
-    return jest.fn().mockImplementation((iloscScian, modyfikator) => ({
-        IloscScian: iloscScian,
-        Modyfikator: modyfikator,
-        rzuc: jest.fn(() => Math.floor(Math.random() * iloscScian) + 1 + modyfikator),
-    }));
-});
+const { obsluzKomende, ustawObslugeKlikniec } = require('./Chat');
 
-jest.mock('./WynikRzut', () => {
-    return jest.fn().mockImplementation((wyniki, wartoscStatystyki, opis, dodatki, trudnosc) => ({
-        toString: jest.fn(() => `Mocked WynikRzutu: ${opis}, suma: ${wyniki.reduce((a, b) => a + b, 0)}`),
-    }));
-});
+jest.mock('./Postac.js', () => ({
+    stworzPostac: jest.fn(() => ({
+        atrybuty: new Map([
+            ["siła", { IloscScian: 6 }],
+            ["zręczność", { IloscScian: 8 }],
+        ]),
+        umiejetnosci: new Map([
+            ["walka", { IloscScian: 10 }],
+            ["skradanie", { IloscScian: 6 }],
+        ]),
+    })),
+}));
 
-describe('Chat - obsluzKomende', () => {
+jest.mock('./Kostka.js', () => ({
+    stworzKostke: jest.fn((iloscScian) => ({ IloscScian: iloscScian })),
+}));
+
+jest.mock('./WynikRzut.js', () => ({
+    obliczWyrazenie: jest.fn(),
+}));
+
+jest.mock('./Show.js', () => ({
+    showPostac: jest.fn(),
+}));
+
+jest.mock('./Rzut.js', () => ({
+    RzutKoscmi: jest.fn().mockImplementation(() => ({
+        rzut: jest.fn(() => ({
+            wynikKosciAtrybutu: [5, 3],
+        })),
+    })),
+}));
+
+describe('Chat module', () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it('powinno obsłużyć rzut kostkami "/r 2d8+3"', () => {
-        const wynik = obsluzKomende('/r 2d8+3');
-        expect(wynik).toContain('Mocked WynikRzutu: Rzut 2d8+3');
+    test('obsłużenie komendy "/r 2d6+3"', () => {
+        const wynik = obsluzKomende('/r 2d6+3');
+        expect(wynik).toContain('Wynik rzutu:');
+        expect(wynik).toMatch(/Wynik rzutu: \d+, \d+/);
     });
 
-    it('powinno obsłużyć rzut na statystykę "/r sila d20+3"', () => {
-        const wynik = obsluzKomende('/r sila d20+3');
-        expect(wynik).toContain('Mocked WynikRzutu: Rzut na sila');
+    test('obsłużenie komendy "/r d6"', () => {
+        const wynik = obsluzKomende('/r d6');
+        expect(wynik).toContain('Wynik rzutu:');
+        expect(wynik).toMatch(/Wynik rzutu: \d+/);
     });
 
-    it('powinno zwrócić błąd dla nieznanej komendy', () => {
-        const wynik = obsluzKomende('/r unknown');
-        expect(wynik).toBe('Nieznana komenda: unknown');
+    test('obsłużenie komendy "/r show"', () => {
+        document.body.innerHTML = '<div id="postac-info"></div>';
+        const wynik = obsluzKomende('/r show');
+        expect(wynik).toBe('Informacje o postaci zostały wyświetlone w elemencie #postac-info.');
     });
 
-    it('powinno zwrócić wiadomość dla zwykłego tekstu', () => {
-        const wynik = obsluzKomende('Cześć wszystkim!');
-        expect(wynik).toBe('Wiadomość: Cześć wszystkim!');
+    test('obsługa kliknięcia w element HTML', () => {
+        document.body.innerHTML = `
+            <button data-statystyka="siła">Rzut Siła</button>
+            <button data-statystyka="zręczność">Rzut Zręczność</button>
+        `;
+        ustawObslugeKlikniec();
+
+        const przyciskSila = document.querySelector('[data-statystyka="siła"]');
+        const przyciskZrecznosc = document.querySelector('[data-statystyka="zręczność"]');
+
+        console.log = jest.fn(); 
+
+        przyciskSila.click();
+        expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Wynik rzutu:'));
+
+        przyciskZrecznosc.click();
+        expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Wynik rzutu:'));
     });
 });
