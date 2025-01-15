@@ -18,9 +18,10 @@
         static showText(text) {
             console.log(text);
         }
-        static showPostac(character) {
+         static showPostac(character, kontenerElement) {
             
             let kontener = document.createElement('div');
+             kontener.id = "postac-info"
             let imie = document.createElement('h1');
             imie.textContent = character.Imię;
             kontener.appendChild(imie);
@@ -42,11 +43,19 @@
             for(let key of character.atrybutyKeys()){
                 let atrybut = document.createElement('p');
                 atrybut.id = key;
+                 atrybut.dataset.statystyka = key
                 atrybut.textContent = `${key}: ${character.atrybut(key).toString()}`;
 
                 atrybut.addEventListener('click', function(){
-                    console.log(`Kliknięto atrybut ${key} o wartości ${character.atrybut(key).toString()}`);
-                    // tutaj ma być wysłane zapytanie do chatu
+                     const komenda = `/r d${character.atrybut(key).IloscScian}`;
+                     const odpowiedz = Chat.obsluzKomende(komenda);
+                     const messagesDiv = document.getElementById('messages');
+                     const div = document.createElement('div');
+                     div.textContent = odpowiedz;
+                     div.className = 'bot';
+                     messagesDiv.appendChild(div);
+                     messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
                 });
                 atrybuty.appendChild(atrybut);
             }
@@ -56,11 +65,18 @@
             for(let key of character.umiejetnosciKeys() ){
                 let umiejetnosc = document.createElement('p');
                 umiejetnosc.id = key;
+                umiejetnosc.dataset.statystyka = key
                 umiejetnosc.textContent = `${key}: ${character.umiejetnosc(key)}`;
 
                 umiejetnosc.addEventListener('click', function(){
-                    console.log(`Kliknięto umiejętność ${key} o wartości ${ character.umiejetnosc(key)}`);
-                    // tutaj ma być wysłane zapytanie do chatu
+                    const komenda = `/r d${character.umiejetnosc(key).IloscScian}`;
+                    const odpowiedz = Chat.obsluzKomende(komenda);
+                    const messagesDiv = document.getElementById('messages');
+                    const div = document.createElement('div');
+                    div.textContent = odpowiedz;
+                    div.className = 'bot';
+                    messagesDiv.appendChild(div);
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
                 });
                 umiejetnosci.appendChild(umiejetnosc);
             }
@@ -108,13 +124,8 @@
             exp.textContent = `EXP: ${character.dostepnyExp} Pozion: ${character.poziom}`;
 
             kontener.appendChild(exp);
-
-
-
-
-            document.body.appendChild(kontener);
-            
-
+             
+             kontenerElement.appendChild(kontener)
         }
     }
     return Show;

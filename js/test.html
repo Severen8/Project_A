@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat RPG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+         #chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+           
+         }
+        #messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        #messages div {
+            margin: 10px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .user {
+            background-color: #e0f7fa;
+            text-align: right;
+        }
+        .bot {
+            background-color: #ede7f6;
+        }
+         #input-container {
+            display: flex;
+            padding: 10px;
+            background: #f4f4f9;
+            flex-shrink: 0; /* Dodane, aby sekcja input nie rozszerzała się na całą wysokość */
+        }
+        #input-container input {
+           flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #input-container button {
+           padding: 10px 20px;
+            background: #007bff;
+           color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+         }
+        #input-container button:hover {
+           background: #0056b3;
+         }
+         #postac-info {
+           margin: 20px auto;
+            width: 600px;
+            background: #fff;
+             border: 1px solid #ddd;
+             border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+         }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="messages"></div>
+    <div id="input-container">
+        <input type="text" id="message-input" placeholder="Wpisz wiadomość lub komendę (np. /r 2d8+3)">
+        <button id="send-button">Wyślij</button>
+    </div>
+</div>
+ <div id="postac-info"></div>
+
+<script src="Kostka.js"></script>
+<script src="WynikRzut.js"></script>
+<script src="Postac.js"></script>
+<script src="Show.js"></script>
+<script src="Rzut.js"></script>
+<script src="Chat.js"></script>
+
+<script>
+    const messagesDiv = document.getElementById('messages');
+    const input = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const chat = Chat;
+    // Funkcja do wyświetlania wiadomości
+    function wyswietlWiadomosc(tresc, klasa) {
+        const div = document.createElement('div');
+        div.textContent = tresc;
+        div.className = klasa;
+        messagesDiv.appendChild(div);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+
+    sendButton.addEventListener('click', () => {
+        const tresc = input.value.trim();
+        if (tresc) {
+            wyswietlWiadomosc(tresc, 'user'); // Wiadomość użytkownika
+            const odpowiedz = chat.obsluzKomende(tresc); // Funkcja z chatLogic.js
+            wyswietlWiadomosc(odpowiedz, 'bot'); // Odpowiedź bota
+            input.value = '';
+        }
+    });
+
+    input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+     // Inicjalizacja showPostac po załadowaniu strony
+    const postacDiv = document.getElementById('postac-info');
+     const postac = Postac.stworzPostac(
+        "Bohater",
+        "Przykładowy opis postaci",
+       new Map([["siła", Kostka.stworzKostke(6)], ["zręczność", Kostka.stworzKostke(8)], ["wigor", Kostka.stworzKostke(4)], ["spryt", Kostka.stworzKostke(4)]]), // Atrybuty
+        new Map([["walka", Kostka.stworzKostke(10)], ["skradanie", Kostka.stworzKostke(6)]]), // Umiejętności
+        [], // Ekwipunek
+        true, // Figura
+        [], // Cechy
+        20, // Exp
+        5, // Dostępny Exp
+        50 // Złoto
+    );
+    Show.showPostac(postac, postacDiv);
+</script>
+
+</body>
+</html>
