@@ -13,101 +13,126 @@
 })(this, function (WynikRzutu, isNumber, Kostka) {
 
     class RzutKoscmi {
-    #tablicaKości;
-    #modyfikator;
-    #opis;
-    #czyFigura;
-    #trudnosc;
-    #kosciFigury=6;
-    constructor(tablicaKości, czyFigura = false, modyfikator = 0, trudnosc = 4, opis = "Rzut kośćmi") {
-        if (!Array.isArray(tablicaKości) || tablicaKości.length === 0) {
-            throw new Error("Tablica kości musi być niepustą tablicą.");
+        #tablicaKości;
+        #modyfikator;
+        #opis;
+        #czyFigura;
+        #trudnosc;
+        #kosciFigury = 6;
+    
+        constructor(tablicaKości, czyFigura = false, modyfikator = 0, trudnosc = 4, opis = "Rzut kośćmi") {
+            this.#tablicaKości = this.#validateArray(tablicaKości, "Tablica kości");
+            this.#modyfikator = this.#validateNumber(modyfikator, "Modyfikator");
+            this.#opis = this.#validateString(opis, "Opis");
+            this.#czyFigura = this.#validateBoolean(czyFigura, "Czy figura");
+            this.#trudnosc = this.#validateTrudnosc(trudnosc, "Trudnosc");
+    
+    
         }
-        if (typeof modyfikator !== 'number') {
-            throw new Error("Modyfikator musi byc liczba");
-        }
-        if (typeof opis !== 'string') {
-            throw new Error("Opis musi byc stringiem");
-        }
-        if(typeof czyFigura !== 'boolean'){
-            throw new Error("Czy figura musi być typu boolean");
-        }
-        if(typeof trudnosc !== 'number' || trudnosc <= 0){
-            throw new Error("Trudnosc rzutu musi być liczbą dodatnią");
-        }
-        this.#tablicaKości = tablicaKości;
-        this.#modyfikator = modyfikator;
-        this.#opis = opis;
-        this.#czyFigura = czyFigura;
-        this.#trudnosc = trudnosc;
-    }
-
-    rzut() {
-        var wynikiRzutow = this.#tablicaKości.map(kostka => {
-            if (typeof kostka.IloscScian !== 'number' || kostka.IloscScian <= 0 ) throw new Error("Tablica kości zawiera niepoprawne dane")
-                
-                return Math.floor(Math.random() * kostka.IloscScian) + 1;
-        });
-            var j=0;
-            var opis ="ATR: ";
-        for(let i=0;j<this.#tablicaKości.length;i++){
-            opis+="(d"+this.#tablicaKości[j].IloscScian+"):"+wynikiRzutow[i];
-            while(wynikiRzutow[i]==this.#tablicaKości[j].IloscScian){
-                i++;
-                wynikiRzutow.splice(i,0,Math.floor(Math.random() * this.#tablicaKości[j].IloscScian) + 1);
-                opis+="+AS(d"+this.#tablicaKości[j].IloscScian+"):"+wynikiRzutow[i];
-                
+    
+        #validateString(value, name) {
+            if (typeof value !== 'string') {
+                throw new Error(`${name} musi byc stringiem`);
             }
-            if(j!=this.#tablicaKości.length-1)
-            opis+="+";
-            j++;
+            return value;
         }
-        opis+="="+wynikiRzutow.reduce((a,b)=>a+b,0);
-        opis+="\r\n";
-        opis+="Figura: ";
-        if(this.#czyFigura){
+    
+        #validateNumber(value, name) {
+            if (typeof value !== 'number') {
+                throw new Error(`${name} musi byc liczba`);
+            }
+            return value;
+        }
+    
+        #validateBoolean(value, name) {
+            if (typeof value !== 'boolean') {
+                 throw new Error(`${name} musi być typu boolean`);
+            }
+            return value;
+        }
+        #validateArray(value, name) {
+            if (!Array.isArray(value) || value.length === 0) {
+                 throw new Error(`${name} musi być niepustą tablicą.`);
+            }
+            return value;
+        }
+      
+      
+
+        #validateTrudnosc(value, name) {
+              if(typeof value !== 'number' || value <= 0){
+                 throw new Error(`${name} rzutu musi być liczbą dodatnią`);
+            }
+            return value;
+        }
+      
+      
+        rzut() {
+          const wynikiRzutow = this.#tablicaKości.map(kostka => {
+              if (typeof kostka.IloscScian !== 'number' || kostka.IloscScian <= 0) {
+                  throw new Error("Tablica kości zawiera niepoprawne dane");
+                }
+                return this.#losujWynikZKosci(kostka.IloscScian);
+            });
+            let opis = "ATR: ";
+            let wynikiRzutowZBonusami = [...wynikiRzutow];
+    
+            let j = 0;
+            for (let i = 0; j < this.#tablicaKości.length; i++) {
+              opis += `(d${this.#tablicaKości[j].IloscScian}):${wynikiRzutowZBonusami[i]}`;
             
-            var wynikFigury = [Math.floor(Math.random() * this.#kosciFigury) + 1];
-            opis+="(d"+this.#kosciFigury+"):"+wynikFigury[0];
-            var i=0;
-            while(wynikFigury[i]==this.#kosciFigury){
-                i++;
-                wynikFigury.splice(i,0,Math.floor(Math.random() * this.#kosciFigury) + 1);
-                opis+="+AS(d"+this.#kosciFigury+"):"+wynikFigury[i];
+                while (wynikiRzutowZBonusami[i] === this.#tablicaKości[j].IloscScian) {
+                  i++;
+                const bonusRoll = this.#losujWynikZKosci(this.#tablicaKości[j].IloscScian);
+                wynikiRzutowZBonusami.splice(i, 0, bonusRoll);
+                   opis += `+AS(d${this.#tablicaKości[j].IloscScian}):${bonusRoll}`;
+                }
+                if (j !== this.#tablicaKości.length - 1)
+                   opis += "+";
+                j++;
             }
-            opis+="="+wynikFigury.reduce((a,b)=>a+b,0);
-            console.log(opis);
-            return new WynikRzutu( wynikiRzutow, this.#modyfikator, this.#opis, wynikFigury,this.#trudnosc);
+              opis += "=" + wynikiRzutowZBonusami.reduce((a, b) => a + b, 0);
+              opis += "\r\n";
+              opis += "Figura: ";
+               let wynikFigury;
+    
+            if (this.#czyFigura) {
+                    wynikFigury = [this.#losujWynikZKosci(this.#kosciFigury)];
+                     opis+= `(d${this.#kosciFigury}):${wynikFigury[0]}`;
+                    let i = 0;
+                    while(wynikFigury[i] == this.#kosciFigury){
+                        i++;
+                         const bonusRoll = this.#losujWynikZKosci(this.#kosciFigury);
+                        wynikFigury.splice(i,0,bonusRoll);
+                        opis+=`+AS(d${this.#kosciFigury}):${bonusRoll}`;
+                    }
+                opis += "=" + wynikFigury.reduce((a, b) => a + b, 0);
+                console.log(opis)
+                 return new WynikRzutu(wynikiRzutowZBonusami, this.#modyfikator, this.#opis, wynikFigury, this.#trudnosc);
+    
+             }
+            console.log(opis)
+              return new WynikRzutu(wynikiRzutowZBonusami, this.#modyfikator, this.#opis, [0], this.#trudnosc);
+    
+    
         }
-         console.log(opis);
-         return new WynikRzutu( wynikiRzutow, this.#modyfikator, this.#opis, [0],this.#trudnosc);
+    
+         #losujWynikZKosci(sides) {
+            return Math.floor(Math.random() * sides) + 1;
+        }
+    
+        static stworzRzut(tablicaKości, czyFigura = false, modyfikator = 0, trudnosc = 4, opis = "Rzut kośćmi") {
+             try {
+                    return new RzutKoscmi(tablicaKości, czyFigura, modyfikator, trudnosc, opis);
+                }
+             catch (e) {
+                return null;
+            }
+        }
     }
 
+return {RzutKoscmi};
 
-    static stworzRzut(tablicaKości, czyFigura=false, modyfikator=0, trudnosc=4, opis="Rzut kośćmi") {
-        if (!Array.isArray(tablicaKości) || tablicaKości.length === 0) {
-            return null;
-        }
-        if (typeof modyfikator !== 'number') {
-            return null;
-        }
-        if (typeof opis !== 'string') {
-            return null;
-        }
-        if(typeof czyFigura !== 'boolean'){
-            return null;
-        }
-        if(typeof trudnosc !== 'number' || trudnosc <= 0){
-            return null;
-        }
-        try{
-        return new RzutKoscmi(tablicaKości, czyFigura, modyfikator, trudnosc, opis);
-        }catch(e){
-            return null;
-     }
-    }
-}
-return RzutKoscmi;
 });
 
 
