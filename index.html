@@ -85,9 +85,23 @@
         umiejetnosci.set("skradanie", new Kostka(6));
         let postac = new Postac("Rycerz","testowy",atr,umiejetnosci);
 
+        const cecha = new Cecha("Fuks", {"fuksy":2}, "Brak opisu");
+             postac.dodajCeche(cecha);
+             const przedmiot= Bron.create({
+            itemID: 3,
+            itemName: "Tarcza Drewniana",
+            itemType: "shield",
+            itemAttributes: [
+                { attr: "sila", value: 4 },
+                { attr: "vit", value: 2 }
+            ],
+            itemDesc: "Prosta drewniana tarcza, lekka i wytrzymała"
+        });
+             postac.dodajPrzedmiot(przedmiot);
         console.log(postac);
 
         Show.showPostac(postac);
+        console.log(postac.atrybut("sila").Modyfikator);
 
     </script>
 

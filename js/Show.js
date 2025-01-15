@@ -29,15 +29,23 @@
             opis.textContent = character.Opis;
             kontener.appendChild(opis);
 
+            let obrona = document.createElement('p');
+            obrona.textContent = `Obrona: ${character.obrona}`;
+            kontener.appendChild(obrona);
+
+            let wytrzymalosc = document.createElement('p');
+            wytrzymalosc.textContent = `Wytrzymałość: ${character.wytrzymalosc}`;
+            kontener.appendChild(wytrzymalosc);
+            
             let atrybuty = document.createElement('div');
             atrybuty.textContent = "Atrybuty:";
-            for(let key of character.AtrybutyKeys()){
+            for(let key of character.atrybutyKeys()){
                 let atrybut = document.createElement('p');
                 atrybut.id = key;
-                atrybut.textContent = `${key}: d${character.Atrybut(key).toString()}`;
+                atrybut.textContent = `${key}: ${character.atrybut(key).toString()}`;
 
                 atrybut.addEventListener('click', function(){
-                    console.log(`Kliknięto atrybut ${key} o wartości ${character.Atrybut(key).toString()}`);
+                    console.log(`Kliknięto atrybut ${key} o wartości ${character.atrybut(key).toString()}`);
                     // tutaj ma być wysłane zapytanie do chatu
                 });
                 atrybuty.appendChild(atrybut);
@@ -45,13 +53,13 @@
             kontener.appendChild(atrybuty);
             let umiejetnosci = document.createElement('div');
             umiejetnosci.textContent = "Umiejętności:";
-            for(let key of character.UmiejętnościKeys() ){
+            for(let key of character.umiejetnosciKeys() ){
                 let umiejetnosc = document.createElement('p');
                 umiejetnosc.id = key;
-                umiejetnosc.textContent = `${key}: ${character.Umiejętność(key)}`;
+                umiejetnosc.textContent = `${key}: ${character.umiejetnosc(key)}`;
 
                 umiejetnosc.addEventListener('click', function(){
-                    console.log(`Kliknięto umiejętność ${key} o wartości ${ character.Umiejętność(key)}`);
+                    console.log(`Kliknięto umiejętność ${key} o wartości ${ character.umiejetnosc(key)}`);
                     // tutaj ma być wysłane zapytanie do chatu
                 });
                 umiejetnosci.appendChild(umiejetnosc);
@@ -60,7 +68,7 @@
 
             let eq = document.createElement('div');
                 eq.textContent = "Ekwipunek:";
-            for(let item of character.EQ){
+            for(let item of character.eq){
                 let przedmiot = document.createElement('p');
                 przedmiot.id = item.itemID;
                 przedmiot.textContent = `${item.itemName}: ${item.itemDesc}`;
@@ -72,7 +80,7 @@
 
             let cechy = document.createElement('div');
                 cechy.textContent = "Cechy:";
-            for(let cecha of character.Cechy){
+            for(let cecha of character.cechy){
                 let cechaElement = document.createElement('p');
                 cechaElement.id = cecha.traitName;
                 cechaElement.textContent = `${cecha.traitName}: ${cecha.traitDesc}`;
@@ -84,20 +92,20 @@
 
             let zloto = document.createElement('p');
             zloto.id = "złoto";
-            zloto.textContent = `Złoto: ${character.Złoto}`;
+            zloto.textContent = `Złoto: ${character.zloto}`;
 
             kontener.appendChild(zloto);
 
             let fuksy = document.createElement('p');
             fuksy.id = "fuksy";
-            fuksy.textContent = `Fuksy: ${character.Fuksy}/${character.FuksyMax}`;
+            fuksy.textContent = `Fuksy: ${character.fuksy}/${character.fuksyMax}`;
 
             kontener.appendChild(fuksy);
 
             let exp = document.createElement('p');
             exp.id = "exp";
 
-            exp.textContent = `EXP: ${character.dostepnyEXP} Pozion: ${character.Poziom}`;
+            exp.textContent = `EXP: ${character.dostepnyExp} Pozion: ${character.poziom}`;
 
             kontener.appendChild(exp);
 
