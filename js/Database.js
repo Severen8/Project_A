@@ -1,3 +1,12 @@
+(function (global, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        //(Gitbash)
+        module.exports = factory();
+    } else {
+        //(Przegladarka)
+        global.Database = factory();
+    }
+})(this, function () {
 class Database {
     static async fetchData(endpoint, params = {}) {
         try {
@@ -19,7 +28,7 @@ class Database {
 
         } catch (error) {
             console.error('Error fetching data:', error);
-            throw error; // Rethrow the error for the caller to handle
+            throw error; 
         }
     }
 
@@ -75,83 +84,6 @@ class Database {
     }
     static async getChatMessagebyCampain(id) {
         return await Database.fetchData('getChatMessagebyCampain', {id: id});
-    }
-
-    static async loadSingleUser(id) {
-        try {
-            const user = await Database.getUser(id); // Zmień ID na rzeczywiste
-            console.log('User:', user);
-            // Wyświetl dane
-        } catch (error) {
-            console.error('Failed to load single user:', error);
-        }
-    }
-    
-    static async loadSingleItem(id) {
-         try {
-            const item = await Database.getItem(id); // Zmień ID na rzeczywiste
-            console.log('Item: ', item)
-             //Wyświetl dane
-        }
-        catch (error){
-             console.error('Failed to load single item: ', error)
-        }
-    }
-    
-    
-    static async loadSingleCharacter(id) {
-      try {
-        const character = await Database.getCharacter(id);
-        console.log('Character:', character);
-      } catch(error) {
-        console.error('Failed to load single character:', error);
-      }
-    }
-    static async loadCharactersByCampaign(id) {
-        try{
-            const characters = await Database.getCharactersByCampaign(id);
-            console.log('Characters: ', characters);
-        }
-        catch(error){
-             console.error('Failed to load characters by campaign: ', error);
-        }
-    }
-    
-    static async loadCharactersByUser(id){
-         try {
-             const characters = await Database.getCharactersByUser(id);
-             console.log('Characters: ', characters);
-         }
-         catch(error){
-             console.error('Failed to load characters by user: ', error);
-         }
-    }
-
-    static async loadSingleCampaign(id) {
-        try {
-            const campaign = await Database.getCampaign(id);
-            console.log('Campaign:', campaign);
-        } catch (error) {
-            console.error('Failed to load single campaign:', error);
-        }
-    }
-    
-    static async loadChatMessages(params = {}) {
-        try {
-            const chatMessages = await Database.getChatMessages(params);
-            console.log('Chat Messages:', chatMessages);
-        } catch (error) {
-            console.error('Failed to load chat messages:', error);
-        }
-    }
-
-    static async loadChatMessageByCampaign(id) {
-        try {
-            const chatMessages = await Database.getChatMessagebyCampain(id);
-            console.log('Chat Messages:', chatMessages);
-        } catch (error) {
-            console.error('Failed to load chat messages:', error);
-        }
     }
 
     static async fetchCharactersByUser(idGracza) {
@@ -317,4 +249,5 @@ class Database {
             throw error;
         }
     }
-}
+}   
+return Database;});

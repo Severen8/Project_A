@@ -1,85 +1,78 @@
-const Kostka = globalThis.Kostka; // Import klasy Kostka
-const WynikRzutu = globalThis.WynikRzutu; // Import klasy WynikRzutu
+(function (global, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        // Node.js
+        module.exports = factory(
+            require('./Kostka'), 
+            require('./WynikRzut')
+        );
+    } else {
+        // Przeglądarka
+        global.Chat = factory(global.Kostka, global.WynikRzutu);
+    }
+})(this, function (Kostka, WynikRzutu) {
+    const postac = {
+        sila: 15,
+        zrecznosc: 12,
+    };
 
-// Statystyki postaci
-const postac = {
-    sila: 15,       // Wartość statystyki
-    zrecznosc: 12,  // Wartość statystyki
-};
+    function obsluzKomende(komenda) {
+        try {
+            if (komenda.startsWith('/r ')) {
+                const argument = komenda.slice(3).trim().toLowerCase();
 
-function obsluzKomende(komenda) {
-    try {
-        if (komenda.startsWith('/r ')) {
-            const argument = komenda.slice(3).trim().toLowerCase();
+                const rzucenieKoscia = argument.match(/^(\d+)d(\d+)([+-]\d+)?$/);
+                if (rzucenieKoscia) {
+                    const [, iloscKosci, iloscScian, modyfikator] = rzucenieKoscia;
+                    const kostka = new Kostka(parseInt(iloscScian), parseInt(modyfikator || 0));
+                    const wyniki = Array.from({ length: parseInt(iloscKosci) }, () =>
+                        Math.floor(Math.random() * kostka.IloscScian) + 1 + kostka.Modyfikator
+                    );
 
-            // Obsługa rzutu kostką (np. "2d8+3")
-            const rzucenieKoscia = argument.match(/^(\d+)d(\d+)([+-]\d+)?$/);
-            if (rzucenieKoscia) {
-                const [, iloscKosci, iloscScian, modyfikator] = rzucenieKoscia;
+                    const wynik = new WynikRzutu(
+                        wyniki,
+                        0,
+                        `Rzut ${iloscKosci}d${iloscScian}${modyfikator || ''}`,
+                        [],
+                        4
+                    );
 
-                // Tworzenie kostki i wykonywanie rzutu
-                const kostka = new Kostka(parseInt(iloscScian), parseInt(modyfikator || 0));
-                const wyniki = Array.from({ length: parseInt(iloscKosci) }, () =>
-                    Math.floor(Math.random() * kostka.IloscScian) + 1 + kostka.Modyfikator
-                );
-
-                // Tworzenie wyniku rzutu
-                const wynik = new WynikRzutu(
-                    wyniki,
-                    0,                         // Brak modyfikatora statystyki
-                    `Rzut ${iloscKosci}d${iloscScian}${modyfikator || ''}`,
-                    [],
-                    4                          // Trudność rzutu
-                );
-
-                return wynik.toString();
-            }
-
-            // Obsługa rzutu na statystykę (np. "sila d20+3")
-            const rzutNaStatystyke = argument.match(/^([a-z]+) d(\d+)([+-]\d+)?$/);
-            if (rzutNaStatystyke) {
-                const [, statystyka, iloscScian, modyfikator] = rzutNaStatystyke;
-                const wartoscStatystyki = postac[statystyka];
-
-                if (wartoscStatystyki === undefined) {
-                    return `Nieznana statystyka: ${statystyka}`;
+                    return wynik.toString();
                 }
 
-                // Tworzenie kostki i wykonanie rzutu
-                const kostka = new Kostka(parseInt(iloscScian), parseInt(modyfikator || 0));
-                const wynikKosci = [
-                    Math.floor(Math.random() * kostka.IloscScian) + 1 + kostka.Modyfikator,
-                ];
+                const rzutNaStatystyke = argument.match(/^([a-z]+) d(\d+)([+-]\d+)?$/);
+                if (rzutNaStatystyke) {
+                    const [, statystyka, iloscScian, modyfikator] = rzutNaStatystyke;
+                    const wartoscStatystyki = postac[statystyka];
 
-                // Tworzenie wyniku rzutu
-                const wynik = new WynikRzutu(
-                    wynikKosci,
-                    wartoscStatystyki,         // Wartość statystyki
-                    `Rzut na ${statystyka}`,
-                    [],
-                    4                          // Trudność rzutu
-                );
+                    if (wartoscStatystyki === undefined) {
+                        return `Nieznana statystyka: ${statystyka}`;
+                    }
 
-                return wynik.toString();
+                    const kostka = new Kostka(parseInt(iloscScian), parseInt(modyfikator || 0));
+                    const wynikKosci = [
+                        Math.floor(Math.random() * kostka.IloscScian) + 1 + kostka.Modyfikator,
+                    ];
+
+                    const wynik = new WynikRzutu(
+                        wynikKosci,
+                        wartoscStatystyki,
+                        `Rzut na ${statystyka}`,
+                        [],
+                        4
+                    );
+
+                    return wynik.toString();
+                }
+
+                return `Nieznana komenda: ${argument}`;
             }
-
-            return `Nieznana komenda: ${argument}`;
+            return `Wiadomość: ${komenda}`;
+        } catch (error) {
+            return `Błąd: ${error.message}`;
         }
-        return `Wiadomość: ${komenda}`;
-    } catch (error) {
-        return `Błąd: ${error.message}`;
     }
-}
 
-// Przykładowe użycie
-const komunikaty = [
-    'Cześć wszystkim!',
-    '/r 2d8+3',
-    '/r sila d20+3',
-    '/r zrecznosc d8',
-    '/r inteligencja d12', // Nieznana statystyka
-];
-
-komunikaty.forEach(komenda => {
-    console.log(obsluzKomende(komenda));
+    return {
+        obsluzKomende,
+    };
 });
