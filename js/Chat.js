@@ -16,14 +16,14 @@
     const postac = Postac.stworzPostac(
         "Bohater",
         "Przykładowy opis postaci",
-       new Map([["siła", Kostka.stworzKostke(6)], ["zręczność", Kostka.stworzKostke(8)], ["wigor", Kostka.stworzKostke(4)], ["spryt", Kostka.stworzKostke(4)]]), // Atrybuty
-        new Map([["walka", Kostka.stworzKostke(10)], ["skradanie", Kostka.stworzKostke(6)]]), // Umiejętności
-        [], // Ekwipunek
-        true, // Figura
-        [], // Cechy
-        20, // Exp
-        5, // Dostępny Exp
-        50 // Złoto
+       new Map([["siła", Kostka.stworzKostke(6)], ["zręczność", Kostka.stworzKostke(8)], ["wigor", Kostka.stworzKostke(4)], ["spryt", Kostka.stworzKostke(4)]]), 
+        new Map([["walka", Kostka.stworzKostke(10)], ["skradanie", Kostka.stworzKostke(6)]]), 
+        [], 
+        true, 
+        [], 
+        20, 
+        5, 
+        50 
     );
 
     function obsluzKomende(komenda) {
@@ -31,7 +31,6 @@
             if (komenda.startsWith('/r ')) {
                 const argument = komenda.slice(3).trim().toLowerCase();
 
-                // Obsługa rzutu kostką (np. "2d8+3")
                 const rzucenieKoscia = argument.match(/^(\d+)d(\d+)([+-]\d+)?$/);
                 if (rzucenieKoscia) {
                     const [, iloscKosci, iloscScian, modyfikator] = rzucenieKoscia;
@@ -51,10 +50,9 @@
                     const wynik = kosc.rzut();
                     return `Wynik rzutu: ${wynik.wynikKosciAtrybutu?.reduce((a, b) => a+b,0)}`;
                 }
-                // Obsługa wyświetlania szczegółów postaci
                  if (argument === "show") {
                     if (postac) {
-                        const postacDiv = document.getElementById('postac-info'); // Załóżmy, że masz element z id 'postac-info'
+                        const postacDiv = document.getElementById('postac-info'); 
                         Show.showPostac(postac, postacDiv);
                         return `Informacje o postaci zostały wyświetlone w elemencie #postac-info.`;
                     }
@@ -69,7 +67,6 @@
             return `Błąd: ${error.message}`;
         }
     }
-   // Funkcja do obsługi kliknięcia w element HTML z atrybutami
     function ustawObslugeKlikniec() {
         document.querySelectorAll("[data-statystyka]").forEach(element => {
             element.addEventListener("click", () => {
@@ -88,11 +85,9 @@
         });
     }
 
-    // Automatyczna inicjalizacja w przeglądarce
     if (typeof window !== "undefined") {
         document.addEventListener("DOMContentLoaded", () => {
             ustawObslugeKlikniec();
-            // Inicjalizacja showPostac po załadowaniu strony
         });
     }
 
